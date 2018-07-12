@@ -39,7 +39,7 @@ class App extends Component{
                         item.todo = data.data.todo;
                         console.log('--------------------------',data.data.todo);
                        // const newArr = [ arr.slice(0, arr.indexOf(item) - 1), {todo:data.data.todo,_id:data.data._id}, arr.splice(arr.indexOf(item) +1)  ]
-                        this.setState({todos:newArr});
+                        this.setState({todos:arr});
                     }
                     else if(method=='delete')
                     {
@@ -67,6 +67,7 @@ class App extends Component{
         this.sendReq(fetch,'post',document.getElementById('add').value,url);
     }
     editTodo = (todo) => {
+        console.log('+++++',todo.todo);
         this.sendReq(fetch,'put',todo.todo,url+todo._id)
     }
     componentDidMount(){
