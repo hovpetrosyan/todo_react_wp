@@ -11,7 +11,7 @@ class App extends Component{
         todos: []
     }
     url = 'http://localhost:3000/api/todo/';
-    
+   
     sendReq= (sender,method,data,url)=>{
         sender(url,{
             method:method,
@@ -94,6 +94,7 @@ class App extends Component{
             <React.Fragment>
                  <Todo addTodo={this.addTodo}/>
                  <table>
+                     <tbody>
                 {this.state.todos.map(
                     (todo) => 
                     {
@@ -102,6 +103,7 @@ class App extends Component{
                         return <TodoItem key = {todo._id} todo = {todo}  deleteTodo={this.deleteTodo} editTodo={this.editTodo} />
                     })
                 } 
+                    </tbody>
                 </table>
             </React.Fragment>
         );
