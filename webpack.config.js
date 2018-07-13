@@ -21,7 +21,7 @@ module.exports={
             }
         },{
             test:/\.css$/,
-            use:['ExtractCssChunks.loader','style-loader','css-loader']
+            use:["style-loader", 'css-loader']
         }]},
         plugins:[
             new HtmlWebpackPlugin({template:'./public/index.html'}),

@@ -3,7 +3,7 @@ import ReactDOM from "react-dom";
 import {TodoItem} from './components/todoitem';
 import {Todo} from './components/todo';
 
-//import '../styles/style.css';
+import '../styles/style.css';
 let root = document.getElementById('root');
 let url = 'http://localhost:3000/api/todo/';
 class App extends Component{
@@ -79,11 +79,12 @@ class App extends Component{
         
             }).then((res)=>{
                 res.json().then((data)=>{
-                    console.log(data);
+                    //console.log(data);
                         let arr = data.data;
                         this.setState({todos:arr});
-                    console.log('state',this.state);
-                    document.getElementById('add').value = '';
+                        console.log('statechanged');
+                    //console.log('state',this.state);
+                   // document.getElementById('add').value = '';
                 });
                // todo
         });
@@ -96,8 +97,8 @@ class App extends Component{
                 {this.state.todos.map(
                     (todo) => 
                     {
-                        console.log('todoid',todo._id);
-                        console.log('todotodo',todo.todo);
+                        //console.log('todoid',todo._id);
+                        //console.log('todotodo',todo.todo);
                         return <TodoItem key = {todo._id} todo = {todo}  deleteTodo={this.deleteTodo} editTodo={this.editTodo} />
                     })
                 } 

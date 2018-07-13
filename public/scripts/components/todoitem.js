@@ -2,15 +2,15 @@ import React,{Component} from 'react';
 export class TodoItem extends Component{
     edit = () =>{
         this.props.editTodo({todo:(document.getElementById(this.props.todo._id)).value,_id:this.props.todo._id});
-        console.log('sxhbsjb',this.props.todo._id);
-        console.log('idddd',(document.getElementById(this.props.todo._id)).value);
+        //console.log('sxhbsjb',this.props.todo._id);
+        //console.log('idddd',(document.getElementById(this.props.todo._id)).value);
     }
     del = ()=>{
         this.props.deleteTodo(this.props.todo);
-        console.log(this.props.todo._id);
+        //console.log(this.props.todo._id);
     }
     render(){
-        console.log('inTodo',this.props.todo);
+        //console.log('inTodo',this.props.todo);
         return(
         <React.Fragment>
             <tr>
