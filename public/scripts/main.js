@@ -2,7 +2,7 @@ import React,{Component} from 'react';
 import ReactDOM from "react-dom";
 import {TodoItem} from './components/todoitem';
 import {Todo} from './components/todo';
-
+import {sendReq} from './utils/requestUtils';
 import '../styles/style.css';
 let root = document.getElementById('root');
 let url = 'http://localhost:3000/api/todo/';
@@ -11,67 +11,20 @@ class App extends Component{
         todos: []
     }
     url = 'http://localhost:3000/api/todo/';
-   
-    sendReq= (sender,method,data,url)=>{
-        sender(url,{
-            method:method,
-            headers: {
-                "Content-Type": "application/json"
-            },
-             body:JSON.stringify({data:data})
-            
-            
-            }).then((res)=>{
-                res.json().then((data)=>{
-                    console.log(data);
-                    if(method=='post'){
-                        console.log(this.state.todos);
-                       let arr =  this.state.todos;
-                       arr.push(data.data);
-                       this.setState({todos:arr})
-        
-                    }
-                    else if(method=='put')
-                    {
-                        console.log('in edit');
-                        let arr = this.state.todos;
-                        let item = arr.find((item)=>{return item._id==data.data._id});
-                        item.todo = data.data.todo;
-                        console.log('--------------------------',data.data.todo);
-                       // const newArr = [ arr.slice(0, arr.indexOf(item) - 1), {todo:data.data.todo,_id:data.data._id}, arr.splice(arr.indexOf(item) +1)  ]
-                        this.setState({todos:arr});
-                    }
-                    else if(method=='delete')
-                    {
-                        console.log('in delete');
-                        let arr = this.state.todos;
-                        let item = arr.find((item)=>{return item._id==data.data});
-                        arr.splice(arr.indexOf(item),1);
-                        this.setState({todos:arr});
-
-                    }
-                    else if(method == 'get'){
-                        let arr = data.data;
-                        this.setState({todos:arr});
-                    }
-                    console.log('state',this.state);
-                    document.getElementById('add').value = '';
-                });
-               // todo
-        });
-    }
+    sendReq = sendReq;
     deleteTodo = (todo)=>{
-        this.sendReq(fetch,'delete',todo.todo,url+todo._id);
+        this.sendReq(fetch,'delete',todo.todo,url+todo._id,this);
     }
     addTodo = (todo) => {
-        this.sendReq(fetch,'post',document.getElementById('add').value,url);
+        this.sendReq(fetch,'post',todo,url,this);
     }
     editTodo = (todo) => {
         console.log('+++++',todo.todo);
-        this.sendReq(fetch,'put',todo.todo,url+todo._id)
+        this.sendReq(fetch,'put',todo.todo,url+todo._id,this)
     }
     componentDidMount(){
-        fetch(url,{
+        this.sendReq(fetch,'get',{},url,this);
+        /*fetch(url,{
             method:'get',
             headers: {
                 "Content-Type": "application/json"
@@ -87,12 +40,13 @@ class App extends Component{
                    // document.getElementById('add').value = '';
                 });
                // todo
-        });
+        });*/
     }
     render(){
         return(
             <React.Fragment>
                  <Todo addTodo={this.addTodo}/>
+                 <div id='anim'>REACT</div>
                  <table>
                      <tbody>
                 {this.state.todos.map(
